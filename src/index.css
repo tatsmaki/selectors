@@ -1,0 +1,381 @@
+body {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    
+    background: #000;
+}
+
+.quest {
+    position: absolute;
+    top: 0vh;
+
+    font-family: monospace;
+    font-size: 3rem;
+    color: white;
+}
+
+.screen {
+    display: flex;
+    width: 99vw;
+    height: 59vh;
+    
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: center;
+
+    transition: 1s ease;
+}
+
+.codeCSS {
+    height: 9vh;
+    border: none;
+}
+.codeHTML {
+    height: 29vh;
+    padding-top: 3vh;
+}
+.codeCSS, .codeHTML {
+    width: 99vw;
+    padding-left: 3vw;
+    box-sizing: border-box;
+    
+    background: rgb(255, 255, 255);
+
+    color: rgb(0, 0, 0);
+    font-size: 1.5rem;
+    font-family: monospace;
+    
+    transition: 1s ease;
+    outline: none;
+}
+
+.menu {
+    position: absolute;
+    top: 3vh;
+    right: 3vw;
+    z-index: 4;
+
+    border: none;
+    background: none;
+    
+    transition: 1s ease;
+    outline: none;
+}
+i {
+    color: rgb(255, 255, 255);
+    transform: scale(2);
+}
+
+.menuScreen {
+    position: absolute;
+    top: -100vh;
+    left: 0;
+    z-index: 3;
+    width: 100vw;
+    height: 100vh;
+    box-sizing: border-box;
+    padding-top: 5vh;
+    padding-left: 5vw;
+    
+    background: rgba(0, 0, 0, 0.863);
+    
+    transition: .5s ease;
+}
+.menuScreen > ol > li {
+    font-size: 2rem;
+    font-family: monospace;
+    color: white;
+}
+.menuScreen > ol > li:hover {
+    background: rgba(255, 255, 255, 0.178);
+    cursor: pointer;
+}
+
+fire {
+    display: block;
+	width: 10vw;
+    height: 10vw;
+    
+	background:linear-gradient(-45deg, red, orange);
+	border-radius: 50% 50% 0 50%;
+	box-shadow: 1vw 1vw 8vw rgb(120, 0, 0);
+	border: 2vw solid black;
+	border-left-width: 0.5vw;
+    border-top-width: 0.5vw;
+    transform: rotate(-135deg);
+    
+    animation: 5s fire infinite;
+}
+fire::after,
+fire::before{
+    position:absolute;
+    top: .5vw; 
+    left: -.5vw;
+
+    display:block;
+    width: 10vw;
+    height: 10vw;
+    
+    content:'';
+
+    background: linear-gradient(-45deg, red, orange);
+    border-radius: 50% 50% 0px 50%;
+
+    transform: scale(.8) rotate(20deg);
+    animation: .3s fire infinite;
+}
+fire::before{
+    transform: scale(.9) rotate(-15deg) translate(10px, 0px);
+    animation-duration:.8s;
+}
+@keyframes fire {
+  0% {height: 10vw; width: 10vw;}
+  50% {height: 9vw; width: 9vw;}
+  100% {height: 10vw; width: 10vw;}
+}
+
+water {
+    position: relative;
+
+    display: block;
+    width: 10vw;
+    height: 10vw;
+
+    border-radius: 50%;
+    box-shadow: 0 -1vw 8vw rgb(42, 42, 223);
+    border: 1vw solid black;
+    
+    animation: water 5s infinite;
+}
+@keyframes water {
+    0% {transform: scale(1);}
+    50% {transform: scale(0.9);}
+    100% {transform: scale(1);}
+}
+water::before {
+    position: absolute;
+    top: -.5vw; 
+    left: -.5vw;
+    z-index: 1;
+
+    display:block;
+    width: 11vw;
+    height: 11vw;
+    
+    content:'';
+    
+    background: url(../assets/water.svg) no-repeat;
+    background-size: 10vw;
+    background-position: center;
+
+    transition: all 0.5s ease;
+    animation: rotate 4s linear infinite;
+}
+@keyframes rotate {
+    from { transform: rotate(-360deg); }
+}
+
+frost {
+    display: block;
+    width: 10vw;
+    height: 10vw;
+
+    border-radius: 50%;
+    box-shadow: 0 -1vw 8vw rgba(143, 210, 255, 0.651);
+    border: 1vw solid black;
+    
+    animation: water 5s infinite;
+}
+frost::before {
+    display: block;
+    width: 10vw;
+    height: 10vw;
+
+    content: "";
+
+    background: url(../assets/frost.svg) no-repeat;
+    background-size: 10vw;
+    background-position: center;
+    
+    transition: all 0.5s ease;
+    animation: frost 10s infinite;
+}
+@keyframes frost {
+    0% { transform: rotate(0deg) }
+    25% { transform: rotate(5deg) }
+    50% { transform: rotate(0deg) }
+    75% { transform: rotate(-5deg) }
+    100% { transform: rotate(0deg) }
+}
+
+lightning {
+    position: relative;
+
+    display: block;
+    width: 10vw;
+    height: 10vw;
+
+    border-radius: 50%;
+    box-shadow: 0 -1vw 8vw rgba(184, 21, 156, 0.651);
+    border: 1vw solid black;
+    
+    animation: water 5s infinite;
+}
+lightning::before {
+    position: absolute;
+    
+    display: block;
+    width: 10vw;
+    height: 10vw;
+    z-index: 1;
+
+    content: "";
+
+    background: url(../assets/light.svg) no-repeat;
+    background-size: 9vw;
+    background-position: top;
+    
+    animation: scale 2s infinite;
+}
+lightning::after {
+    position: absolute;
+    
+    display: block;
+    width: 10vw;
+    height: 10vw;
+    z-index: 2;
+
+    content: "";
+
+    background: url(../assets/light.svg) no-repeat;
+    background-size: 8vw;
+    background-position: center;
+    
+    animation: lightning 3s infinite;
+}
+@keyframes lightning {
+    0% { transform: rotate(-20deg);  opacity: 0;}
+    40% { opacity: 0;}
+    41% { opacity: 1;}
+    50% { opacity: 0;}
+    60% { opacity: 1;}
+    61% { opacity: 0;}
+    100% { transform: rotate(-20deg); opacity: 0;}
+} 
+@keyframes scale {
+    0% { transform: scale(1); opacity: 1;}
+    20% { transform: scale(1); opacity: 0;}
+    21% { transform: scale(.8); opacity: 1;}
+    40% { transform: scale(.8); opacity: 0;}
+    41% { transform: scale(1); opacity: 1;}
+    60% { transform: scale(1); opacity: 0;}
+    61% { transform: scale(.7); opacity: 1;}
+    80% { transform: scale(.7); opacity: 0;}
+    81% { transform: scale(.9); opacity: 1;}
+    100% { transform: scale(.9); opacity: 0;}
+}
+
+earth {
+    position: relative;
+    display: block;
+    
+    box-shadow: 0 -1vw 8vw rgba(219, 192, 36, 0.651);
+    border: 1vw solid black;
+
+    transform: rotate(-45deg);
+    animation: earth 5s infinite;
+}
+earth::before {
+    position: absolute;
+    top: -1.25vw; 
+    left: -1.25vw;
+
+    display: block;
+    width: 10vw;
+    height: 10vw;
+    z-index: 2;
+    
+    content: "";
+
+    background: url(../assets/earth.svg) no-repeat;
+    background-size: 10vw;
+    background-position: center;
+    
+    animation: ground 10s infinite;
+}
+@keyframes ground {
+    0% { transform: rotate(45deg);}
+    19% { transform: rotate(45deg);}
+    20% { transform: rotate(135deg);}
+    39% { transform: rotate(135deg);}
+    40% { transform: rotate(225deg);}
+    59% { transform: rotate(225deg);}
+    60% { transform: rotate(315deg);}
+    79% { transform: rotate(315deg);}
+    80% { transform: rotate(405deg);}
+    100% { transform: rotate(405deg);}
+}
+@keyframes earth {
+    0% { width: 8vw; height: 8vw;}
+    50% { width: 7vw; height: 7vw;}
+    100% { width: 8vw; height: 8vw;}
+}
+
+wind {
+    position: relative;
+
+    display: block;
+    width: 10vw;
+    height: 10vw;
+
+    border-radius: 50%;
+    box-shadow: 0 -1vw 8vw rgba(0, 255, 200, 0.89);
+    border: 1vw solid black;
+
+    animation: water 5s infinite;
+}
+wind::before {
+    position: absolute;
+    top: -0.5vw; 
+    left: -1vw;
+    
+    display: block;
+    width: 12vw;
+    height: 12vw;
+    z-index: 1;
+
+    content: "";
+    
+    background: url(../assets/wind.svg) no-repeat;
+    background-size: 12vw;
+    background-position: center;
+    
+    animation: wind 4s infinite;
+}
+@keyframes wind {
+    0% { transform: scaleX(1);}
+    50% { transform: scaleX(0);}
+    100% { transform: scaleX(1);}
+}
+
+#frozen {
+    box-shadow: 0 -1vw 8vw rgba(143, 210, 255, 0.651);
+}
+#frozen::before {
+    background: url(../assets/frozenwater.svg) no-repeat;
+    background-size: 10vw;
+    background-position: center;
+    animation: frost 10s infinite;
+}
+
+.stop, .stop::before, .stop::after {
+    animation: none;
+}
