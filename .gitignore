@@ -1,5 +1,9 @@
 #webpack dist
-/dist/
+dist
+dist/
+dist/*
+/dist/*
+/dist/*.*
 
 # Logs
 logs
