@@ -1,5 +1,5 @@
 #webpack dist
-dist/
+/dist/
 
 # Logs
 logs
