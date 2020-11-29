@@ -1,5 +1,5 @@
 #webpack dist for PR
-dist/
+/dist/
 
 # Logs
 logs
