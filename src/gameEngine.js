@@ -1,18 +1,19 @@
 import levels from "./levels";
 import quests from "./quests";
 import selectors from "./selectors";
+import parseHTML from "./parseHTML";
 
 class Elements {
     constructor () {
         this.main = null;
-        this.userInterfaceFragment = null;
-        this.quest = null;
-        this.screen = null;
-        this.codeCSS = null;
-        this.codeHTML = null;
-        this.menu = null;
-        this.menuScreen = null;
-        this.selector = "water";
+        this.userInterfaceFragment = document.createDocumentFragment();
+        this.quest = document.createElement("p");
+        this.screen = document.createElement("div");
+        this.codeCSS = document.createElement("input");
+        this.codeHTML = document.createElement("div");
+        this.menu = document.createElement("button");
+        this.menuScreen = document.createElement("div");
+        this.selector = "";
     }
 
     loadLevel (level) {
@@ -33,76 +34,65 @@ class Elements {
     createDocument (currentLevel, selector) {
         this.currentLevel = currentLevel;
         this.selector = selector;
-        this.userInterfaceFragment = document.createDocumentFragment();
 
-        this.quest = document.createElement("p");
         this.quest.classList.add("quest");
-        this.quest.textContent = quests[this.currentLevel];
-        this.userInterfaceFragment.appendChild(this.quest);
-
-        this.screen = document.createElement("div");
         this.screen.classList.add("screen");
-        this.screen.appendChild(this.main);
-        this.userInterfaceFragment.appendChild(this.screen);
-
-        this.codeCSS = document.createElement("input");
         this.codeCSS.classList.add("codeCSS");
-        this.codeCSS.placeholder = 'Type CSS selector here';
-        this.userInterfaceFragment.appendChild(this.codeCSS);
-
-        this.codeHTML = document.createElement("div");
         this.codeHTML.classList.add("codeHTML");
-
-        this.codeHTML.innerText = this.parseHTML(this.screen.innerHTML);
-        this.userInterfaceFragment.appendChild(this.codeHTML);
-
-        let menuStatus = false;
-        const toggleMenu = () => {
-            const menuScreen = document.querySelector('.menuScreen');
-            if (menuStatus) {
-                menuScreen.style.top = '-100vh';
-            } else {
-                menuScreen.style.top = 0;
-            }
-            menuStatus = !menuStatus;
-        }
-        this.menu = document.createElement("button");
-        this.menu.addEventListener('click', toggleMenu);
         this.menu.classList.add("menu");
-        this.menu.innerHTML = "<i class='material-icons'>menu</i>";
-        this.userInterfaceFragment.appendChild(this.menu);
-
-        this.menuScreen = document.createElement("div");
         this.menuScreen.classList.add("menuScreen");
+
+        this.quest.textContent = quests[this.currentLevel];
+        this.screen.appendChild(this.main);
+        this.codeCSS.placeholder = 'Type CSS selector here';
+        this.codeHTML.innerText = parseHTML(this.screen.innerHTML);
+        this.menu.innerHTML = "<i class='material-icons'>menu</i>";
+        this.menu.addEventListener('click', () => {
+            this.toggleMenu();
+        });
         const levelsList = document.createElement('ol');
         Object.keys(levels).forEach( item => {
             const element = document.createElement('li');
             element.textContent = item;
             element.addEventListener('click', () => {
                 this.currentLevel = item;
-                this.loadLevel(levels[item]);
-                this.screen.innerHTML = '';
-                this.screen.appendChild(this.main);
-                this.codeHTML.innerText = this.parseHTML(this.screen.innerHTML);
-                this.selector = selectors[item];
-                this.quest.textContent = quests[this.currentLevel];
+                this.loadNextLevel(item);
                 this.saveToLocal();
-                toggleMenu();
+                this.toggleMenu();
             });
             levelsList.appendChild(element);
         });
         this.menuScreen.appendChild(levelsList);
-        this.userInterfaceFragment.appendChild(this.menuScreen);
 
+        this.userInterfaceFragment.appendChild(this.quest);
+        this.userInterfaceFragment.appendChild(this.screen);
+        this.userInterfaceFragment.appendChild(this.codeCSS);
+        this.userInterfaceFragment.appendChild(this.codeHTML);
+        this.userInterfaceFragment.appendChild(this.menu);
+        this.userInterfaceFragment.appendChild(this.menuScreen);
         document.body.appendChild(this.userInterfaceFragment);
+    }
+
+    loadNextLevel (level) {
+        this.loadLevel(levels[level]);
+        this.screen.innerHTML = '';
+        this.screen.appendChild(this.main);
+        this.codeHTML.innerText = parseHTML(this.screen.innerHTML);
+        this.selector = selectors[level];
+        this.quest.textContent = quests[this.currentLevel];
     }
 
     saveToLocal () {
         localStorage.setItem('tatsmaki-JS2020Q3-currentLevel', this.currentLevel);
     }
-    
-    parseHTML (string) {
-        return string.replace(/><\/\w+>/g, ' />\n').replace(/ class="stop"/g, '');
+
+    toggleMenu () {
+        if (this.menuStatus) {
+            this.menuScreen.style.top = '-100vh';
+        } else {
+            this.menuScreen.style.top = 0;
+        }
+        this.menuStatus = !this.menuStatus;
     }
 
     selectorCheck () {
@@ -121,12 +111,7 @@ class Elements {
             const nextLevel = findLevel[findLevel.indexOf(this.currentLevel) + 1];
             setTimeout( () => {
                 if (nextLevel) {
-                    this.loadLevel(levels[nextLevel]);
-                    this.screen.innerHTML = '';
-                    this.screen.appendChild(this.main);
-                    this.codeHTML.innerText = this.parseHTML(this.screen.innerHTML);
-                    this.selector = selectors[nextLevel];
-                    this.quest.textContent = quests[this.currentLevel];
+                    this.loadNextLevel(nextLevel);
                 } else {
                     this.screen.innerHTML = '';
                     this.quest.textContent = 'Game End';
