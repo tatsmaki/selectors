@@ -4,6 +4,8 @@ dist/
 dist/*
 /dist/*
 /dist/*.*
+assets/
+src/
 
 # Logs
 logs
